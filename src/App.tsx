@@ -1,7 +1,11 @@
+import { TodoList } from './components/TodoList';
+import { TodoNew } from './components/TodoNew';
+
 function App() {
   return (
-    <div>
-      <h2>Hello</h2>
+    <div className="App">
+      <TodoNew />
+      <TodoList />
     </div>
   );
 }
