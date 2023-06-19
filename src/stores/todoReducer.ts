@@ -1,9 +1,12 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
+export type funFactor = 'yes' | 'no' | 'meh';
+
 export interface TodoItem {
   id: number;
   text: string;
   isDone: boolean;
+  fun?: funFactor;
 }
 
 export interface TodoList {
@@ -50,9 +53,41 @@ export const tasksSlice = createSlice({
       }
       return state;
     },
+    thatWasFun: (state, action: PayloadAction<number>) => {
+      const index = state.list.findIndex((t) => t.id === action.payload);
+      if (index !== -1) {
+        state.list[index].isDone = !state.list[index].isDone;
+        state.list[index].fun = 'yes';
+      }
+      return state;
+    },
+    wouldRatherHaveDoneSomethingElse: (state, action: PayloadAction<number>) => {
+      const index = state.list.findIndex((t) => t.id === action.payload);
+      if (index !== -1) {
+        state.list[index].isDone = !state.list[index].isDone;
+        state.list[index].fun = 'meh';
+      }
+      return state;
+    },
+    letsNotDoThatAgain: (state, action: PayloadAction<number>) => {
+      const index = state.list.findIndex((t) => t.id === action.payload);
+      if (index !== -1) {
+        state.list[index].isDone = !state.list[index].isDone;
+        state.list[index].fun = 'no';
+      }
+      return state;
+    },
   },
 });
 
-export const { addTodo, removeTodo, toggleDone, updateText } = tasksSlice.actions;
+export const {
+  addTodo,
+  removeTodo,
+  toggleDone,
+  updateText,
+  thatWasFun,
+  wouldRatherHaveDoneSomethingElse,
+  letsNotDoThatAgain,
+} = tasksSlice.actions;
 
 export default tasksSlice.reducer;
